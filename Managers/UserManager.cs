@@ -1,38 +1,35 @@
-﻿using NexusFlow.src.models;
-using NexusFlow.src.core;
+﻿using Microsoft.AspNetCore.Mvc;
 using API.Singletons;
+using NexusFlow.src.models.DB;
+using NexusFlow.src.models.DTO;
+using System.Security.Cryptography;
+using BCrypt.Net;
 
 namespace API.Managers
 {
     public static class UserManager
     {
-        public static void CreateUser(string name)
+        public static void CreateUser(UserDTO user)
         {
-            // Create user class
-            User newUser = new User();
-            newUser.Name = name;    
-            newUser.Id = Guid.NewGuid().ToString();
 
-            // Create root of user class
-            NexusNodeDB root = new NexusNodeDB();
-            root.DataType = (int)DataType.Raw;
-            root.Data = "Your user root";
-            root.Name = "Root";
-            root.ParentId = null;
-            root.Id = Guid.NewGuid().ToString();
-            root.ChildrenIds = new List<string>();
+            var passwordSalt = BCrypt.Net.BCrypt.GenerateSalt();
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password, passwordSalt);
 
-            // Assign root
-            newUser.rootId = root.Id;
+            UserDB newUser = new UserDB()
+            {
+                UserId = Guid.NewGuid().ToString(),
+                Firstname = user.Firstname,
+                Surname = user.Surname,
+                EmailAdress = user.EmailAdress,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
+            };
 
-            // Insert both objects into database
-            var user_collection = MongoSingleton.Database.GetCollection<User>(TablesSingleton.Users);
-
+            var user_collection = MongoSingleton.Database.GetCollection<UserDB>(TablesSingleton.Users);
             user_collection.InsertOne(newUser);
 
-            var node_collection = MongoSingleton.Database.GetCollection<NexusNodeDB>(TablesSingleton.NexusNodes);
+            // node insertion -
 
-            node_collection.InsertOne(root);
 
         }
     }

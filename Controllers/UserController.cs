@@ -1,10 +1,7 @@
 using API.Managers;
 using Microsoft.AspNetCore.Mvc;
-using NexusFlow.src.core;
 using System.Collections.Generic;
-
-using API.Singletons;
-using NexusFlow.src.models;
+using NexusFlow.src.models.DTO;
 
 namespace API.Controllers
 {
@@ -20,9 +17,10 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public void Create(string name)
+        public IActionResult Create([FromBody] UserDTO user)
         {
-             UserManager.CreateUser(name);
+            UserManager.CreateUser(user);
+            return this.Ok();
         }
 
     }
