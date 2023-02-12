@@ -2,6 +2,7 @@ using API.Managers;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using NexusFlow.src.models.DTO;
+using Data.src.models.DTO;
 
 namespace API.Controllers
 {
@@ -20,6 +21,11 @@ namespace API.Controllers
         public IActionResult Create([FromBody] UserDTO user)
         {
             UserManager.CreateUser(user);
+            return this.Ok();
+        }
+        public IActionResult Login([FromBody] LoginDTO logininfo)
+        {
+            UserManager.LoginUser(logininfo);
             return this.Ok();
         }
 
