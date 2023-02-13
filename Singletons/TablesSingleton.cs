@@ -2,7 +2,7 @@
 {
     public static class TablesSingleton
     {
-        public static string NexusNodes = "NexusNodes";
+        public static string Nodes = "Nodes";
         public static string Users = "Users";
         public static string AccessTokens = "AccessTokens";
     }
