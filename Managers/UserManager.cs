@@ -6,12 +6,13 @@ using System.Security.Cryptography;
 using BCrypt.Net;
 using Data.src.models.DTO;
 using MongoDB.Driver;
+using Data.src.models.DB;
 
 namespace API.Managers
 {
     public static class UserManager
     {
-        public static void CreateUser(UserDTO user)
+        public static IActionResult CreateUser(UserDTO user)
         {
 
             // perform check to see if username already exists in system
@@ -21,10 +22,10 @@ namespace API.Managers
 
             UserDB newUser = new UserDB()
             {
-                UserId = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid().ToString(),
                 Firstname = user.Firstname,
                 Surname = user.Surname,
-                EmailAdress = user.EmailAdress,
+                EmailAddress = user.EmailAddress,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };
@@ -34,22 +35,26 @@ namespace API.Managers
 
             // node insertion -
 
+            return new OkResult();
 
         }
 
-        public static void LoginUser(LoginDTO logininfo)
+        public static LoginResponseDTO LoginUser(LoginDTO logininfo)
         {
 
             var user_collection = MongoSingleton.Database.GetCollection<UserDB>(TablesSingleton.Users);
 
-            List<UserDB> users = user_collection.Find(x => x.EmailAdress == logininfo.EmailAdress).ToList();
+            List<UserDB> users = user_collection.Find(x => x.EmailAddress == logininfo.EmailAddress).ToList();
 
             // Assume only 1 user with email adress exists in system
 
+            LoginResponseDTO response = new LoginResponseDTO();
+
             if (users.Count == 0)
             {
-                // Return 401 Unauthorized status code to indicate that the login failed
-                // because there is no user with the provided email address
+                response.ResponseCode = 401;
+                response.ResponseDescription = "USER_NOT_FOUND";
+                // Unauthorized Status Code
             }
             else
             {
@@ -58,17 +63,39 @@ namespace API.Managers
 
                 if (user.PasswordHash == passwordHash)
                 {
-                    // Return 200 OK status code to indicate that the login was successful
-                    // You should also generate an access token and store it in the database
-                    // and attach it to a response cookie to be returned to the client
-                    // with an appropriate expiration date/time to limit the user's session
+                    // Successfull login
+
+                    response.ResponseCode = 200;
+                    response.ResponseDescription = "LOGIN_SUCCESS";
+
+                    // Generate Access Token
+
+                    string token = Guid.NewGuid().ToString();
+
+                    response.AccessToken = token;
+
+                    // Add access Token to database
+
+                    var accesstoken_collection = MongoSingleton.Database.GetCollection<AccessTokenDB>(TablesSingleton.AccessTokens);
+
+                    AccessTokenDB accessTokenDB = new AccessTokenDB()
+                    {
+                        Id = token, UserEmailAddress = logininfo.EmailAddress
+                    };
+
+                    accesstoken_collection.InsertOne(accessTokenDB);
+
                 }
                 else
                 {
-                    // Return 401 Unauthorized status code to indicate that the login failed
-                    // because the password provided by the user does not match the password hash stored in the database
+                    response.ResponseCode = 401;
+                    response.ResponseDescription = "INCORRECT_PASSWORD";
+                    // Unauthorized Status Code
+
                 }
             }
+
+            return response;
 
         }
     }

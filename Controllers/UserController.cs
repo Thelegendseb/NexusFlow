@@ -20,13 +20,13 @@ namespace API.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] UserDTO user)
         {
-            UserManager.CreateUser(user);
-            return this.Ok();
+            return UserManager.CreateUser(user);
         }
-        public IActionResult Login([FromBody] LoginDTO logininfo)
+
+        [HttpPost]
+        public LoginResponseDTO Login([FromBody] LoginDTO logininfo)
         {
-            UserManager.LoginUser(logininfo);
-            return this.Ok();
+            return UserManager.LoginUser(logininfo);
         }
 
     }

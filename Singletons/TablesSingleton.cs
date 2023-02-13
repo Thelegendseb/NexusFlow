@@ -4,5 +4,6 @@
     {
         public static string NexusNodes = "NexusNodes";
         public static string Users = "Users";
+        public static string AccessTokens = "AccessTokens";
     }
 }
