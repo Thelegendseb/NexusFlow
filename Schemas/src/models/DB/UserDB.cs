@@ -13,6 +13,7 @@ namespace NexusFlow.src.models.DB
     {
         [BsonId]
         public string Id { get; set; }
+        public string RootId { get; set; }
         public string Firstname { get; set; }
         public string Surname { get; set; }
         public string EmailAddress { get; set; }

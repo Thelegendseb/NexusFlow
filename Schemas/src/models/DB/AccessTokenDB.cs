@@ -11,6 +11,6 @@ namespace Data.src.models.DB
     {
         [BsonId]
         public string Id { get; set; }
-        public string UserEmailAddress { get; set; }
+        public string UserId { get; set; }
     }
 }

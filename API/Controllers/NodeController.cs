@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 using API.Singletons;
 using NexusFlow.src.models;
+using NexusFlow.src.models.DB;
+using NexusFlow.src.models.DTO;
 
 namespace API.Controllers
 {
@@ -20,9 +22,9 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public void SomeMethod()
+        public NexusNodeDB GetRoot(string accesstoken)
         {
-             NodeManager.SomeMethod();
+             return NodeManager.GetUserRoot(accesstoken);
         }
 
     }

@@ -7,6 +7,7 @@ using BCrypt.Net;
 using Data.src.models.DTO;
 using MongoDB.Driver;
 using Data.src.models.DB;
+using NexusFlow.src.core;
 
 namespace API.Managers
 {
@@ -40,9 +41,24 @@ namespace API.Managers
                 PasswordSalt = passwordSalt
             };
 
+            var node_collection = MongoSingleton.Database.GetCollection<NexusNodeDB>(TablesSingleton.Nodes);
+
+            NexusNodeDB root = new NexusNodeDB()
+            {
+                Id = Guid.NewGuid().ToString(),
+                // ParentId = null;
+                OwnerId = newUser.Id,
+                Name = "root",
+                Data = "This is your user root, the main folder where all of your information is stored.",
+                ChildrenIds = new List<string>(),
+                DataType = (int)DataType.Raw
+            };
+
+            newUser.RootId = root.Id;   
+
             user_collection.InsertOne(newUser);
 
-            // node insertion -
+            node_collection.InsertOne(root);
 
             return new OkResult();
 
@@ -89,7 +105,7 @@ namespace API.Managers
 
                     AccessTokenDB accessTokenDB = new AccessTokenDB()
                     {
-                        Id = token, UserEmailAddress = logininfo.EmailAddress
+                        Id = token, UserId = user.Id
                     };
 
                     accesstoken_collection.InsertOne(accessTokenDB);
