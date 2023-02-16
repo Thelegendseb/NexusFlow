@@ -14,13 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Schemas\Schemas.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Data">
-      <HintPath>..\Data\bin\Debug\net6.0\Data.dll</HintPath>
+    <Reference Include="Schemas">
+      <HintPath>..\Schemas\bin\Debug\net6.0\Schemas.dll</HintPath>
     </Reference>
   </ItemGroup>
+
 
 </Project>
