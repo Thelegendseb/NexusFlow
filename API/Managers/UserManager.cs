@@ -7,7 +7,6 @@ using BCrypt.Net;
 using Data.src.models.DTO;
 using MongoDB.Driver;
 using Data.src.models.DB;
-using NexusFlow.src.core;
 
 namespace API.Managers
 {
@@ -51,7 +50,7 @@ namespace API.Managers
                 Name = "root",
                 Data = "This is your user root, the main folder where all of your information is stored.",
                 ChildrenIds = new List<string>(),
-                DataType = (int)DataType.Raw
+                DataType = 0
             };
 
             newUser.RootId = root.Id;   
@@ -121,6 +120,17 @@ namespace API.Managers
             }
 
             return response;
+
+        }
+
+        public static IActionResult LogoutUser(string accesstoken)
+        {
+
+            var accesstoken_collection = MongoSingleton.Database.GetCollection<AccessTokenDB>(TablesSingleton.AccessTokens);
+
+            accesstoken_collection.DeleteOne(x => x.Id == accesstoken);
+
+            return new OkResult();
 
         }
     }

@@ -29,5 +29,11 @@ namespace API.Controllers
             return UserManager.LoginUser(logininfo);
         }
 
+        [HttpPost]
+        public IActionResult Logout(string accesstoken)
+        {
+            return UserManager.LogoutUser(accesstoken);
+        }
+
     }
 }
