@@ -15,7 +15,17 @@ namespace API.Managers
         public static IActionResult CreateUser(UserDTO user)
         {
 
+            var user_collection = MongoSingleton.Database.GetCollection<UserDB>(TablesSingleton.Users);
+
             // perform check to see if username already exists in system
+
+            List<UserDB> users = user_collection.Find(x => x.EmailAddress == user.EmailAddress).ToList();
+
+            if(users.Count > 0)
+            {
+                // User already contained in system
+                return new ConflictResult();
+            }
 
             var passwordSalt = BCrypt.Net.BCrypt.GenerateSalt();
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password, passwordSalt);
@@ -30,7 +40,6 @@ namespace API.Managers
                 PasswordSalt = passwordSalt
             };
 
-            var user_collection = MongoSingleton.Database.GetCollection<UserDB>(TablesSingleton.Users);
             user_collection.InsertOne(newUser);
 
             // node insertion -
