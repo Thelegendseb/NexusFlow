@@ -14,7 +14,6 @@ namespace NexusFlow.src.models.DB
         public string ParentId { get; set; }
         public string OwnerId { get; set; }
         public string Name { get; set; }
-        public List<string> ChildrenIds { get; set; }
         public string Data { get; set; }
         public int DataType { get; set; }
     }

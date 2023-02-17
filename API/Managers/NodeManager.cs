@@ -6,6 +6,7 @@ using MongoDB.Driver;
 using Schemas.src.models.DTO;
 using System.Linq.Expressions;
 using NexusFlow.src.services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Managers
 {
@@ -63,8 +64,8 @@ namespace API.Managers
                 foreach (NexusNodeDB node in childNodeDB)
                 {
                     NexusNodeDTO newNodeDTO = new NexusNodeDTO()
-                    { 
-                        Id = node.Id,  
+                    {
+                        Id = node.Id,
                         Name = node.Name,
                         DataType = node.DataType,
                     };
@@ -77,7 +78,7 @@ namespace API.Managers
 
             }
 
-        }  
+        }
 
         public static NexusNodeDataDTO GetNodeData(string accesstoken, string nodeid)
         {
@@ -136,5 +137,103 @@ namespace API.Managers
 
         }
 
+        public static IActionResult AddNode(NexusNodeCreationDTO newNode, string accesstoken, string parentid)
+        {
+
+            var accesstoken_collection = MongoSingleton.Database.GetCollection<AccessTokenDB>(TablesSingleton.AccessTokens);
+
+            var node_collection = MongoSingleton.Database.GetCollection<NexusNodeDB>(TablesSingleton.Nodes);
+
+            List<AccessTokenDB> tokens = accesstoken_collection.Find(x => x.Id == accesstoken).ToList();
+
+            if (tokens.Count == 0)
+            {
+                return new UnauthorizedResult();
+            }
+            else
+            {
+                AccessTokenDB token = tokens.First();
+
+                NexusNodeDB newNodeDB = new NexusNodeDB() { 
+                  Name = newNode.Name,
+                  Id = Guid.NewGuid().ToString(),
+                  ParentId = parentid,
+                  Data = newNode.Data,
+                  DataType = newNode.DataType,
+                  OwnerId = token.UserId
+                };
+
+                node_collection.InsertOne(newNodeDB);
+
+                return new OkResult();
+
+            }
+
+        }
+
+        public static IActionResult DeleteNode(string accesstoken, string nodeid)
+        {
+            var accesstoken_collection = MongoSingleton.Database.GetCollection<AccessTokenDB>(TablesSingleton.AccessTokens);
+
+            var node_collection = MongoSingleton.Database.GetCollection<NexusNodeDB>(TablesSingleton.Nodes);
+
+            List<AccessTokenDB> tokens = accesstoken_collection.Find(x => x.Id == accesstoken).ToList();
+
+            if (tokens.Count == 0)
+            {
+                return new UnauthorizedResult();
+            }
+            else
+            {
+                AccessTokenDB token = tokens.First();
+
+                node_collection.DeleteOne(x => x.Id == nodeid);
+
+                return new OkResult();
+
+            }
+
+        }
+
+        public static IActionResult EditNode(NexusNodeCreationDTO newNode, string accesstoken, string nodeid)
+        {
+            var accesstoken_collection = MongoSingleton.Database.GetCollection<AccessTokenDB>(TablesSingleton.AccessTokens);
+
+            var node_collection = MongoSingleton.Database.GetCollection<NexusNodeDB>(TablesSingleton.Nodes);
+
+            List<AccessTokenDB> tokens = accesstoken_collection.Find(x => x.Id == accesstoken).ToList();
+
+            if (tokens.Count == 0)
+            {
+                 return new UnauthorizedResult();
+            }
+            else
+            {
+                 AccessTokenDB token = tokens.First();
+
+           
+                NexusNodeDB oldNodeDB = node_collection.Find(x => x.Id == nodeid).ToList()[0];
+
+                NexusNodeDB newNodeDB = new NexusNodeDB 
+                { 
+                Id = oldNodeDB.Id,
+                OwnerId = oldNodeDB.OwnerId,              
+                ParentId = oldNodeDB.ParentId,
+                Data = newNode.Data,    
+                DataType = newNode.DataType,
+                Name = newNode.Name
+                };
+                // construct newNodeDB from oldNodeDB 
+
+                node_collection.ReplaceOne(x => x.Id == nodeid, newNodeDB);
+
+                return new OkResult();
+
+            }
+
+        }
+
     }
 }
+
+

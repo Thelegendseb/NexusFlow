@@ -49,7 +49,6 @@ namespace API.Managers
                 OwnerId = newUser.Id,
                 Name = "root",
                 Data = "This is your user root, the main folder where all of your information is stored.",
-                ChildrenIds = new List<string>(),
                 DataType = 0
             };
 
