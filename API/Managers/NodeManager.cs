@@ -113,6 +113,7 @@ namespace API.Managers
                     case 1:
 
                         script_ = node.Data;
+                        // Throws error
                         data_ = ScriptRunner.Run(node.Data).Result;
 
                         break;
