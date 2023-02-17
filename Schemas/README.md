@@ -1,7 +1,7 @@
-# models.DB
+# models/DB
 The classes here are the database class representations of the application, only exposed to the API.
 
-# models.DTO
+# models/DTO
 The classes here are Data Transfer Objects, used to send and receive data from the API.
 
 # services
