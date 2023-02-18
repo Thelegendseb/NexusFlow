@@ -4,9 +4,7 @@ using NexusFlow.src.models.DB;
 using NexusFlow.src.models.DTO;
 using System.Security.Cryptography;
 using BCrypt.Net;
-using Data.src.models.DTO;
 using MongoDB.Driver;
-using Data.src.models.DB;
 
 namespace API.Managers
 {

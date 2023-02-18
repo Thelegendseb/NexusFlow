@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.src.models.DTO
+namespace NexusFlow.src.models.DTO
 {
     public class LoginResponseDTO
     {

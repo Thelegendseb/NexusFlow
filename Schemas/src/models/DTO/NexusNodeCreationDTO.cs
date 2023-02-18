@@ -1,4 +1,4 @@
-﻿namespace Schemas.src.models.DTO
+﻿namespace NexusFlow.src.models.DTO
 {
     public class NexusNodeCreationDTO
     {
