@@ -33,6 +33,13 @@ namespace API.Controllers
         {
             return UserManager.LogoutUser(accesstoken);
         }
+        [HttpDelete]
+        public IActionResult Delete(string accesstoken)
+        {
+            return null;
+            // back in it baby
+            // return UserManager.LogoutUser(accesstoken);
+        }
 
     }
 }
