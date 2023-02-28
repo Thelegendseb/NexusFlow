@@ -23,31 +23,31 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public List<NexusNodeDTO> GetChildNodes(string accesstoken, string parentid)
+        public List<NexusNodeDTO> GetChildren(string accesstoken, string parentid)
         {
             return NodeManager.GetChildNodes(accesstoken,parentid);
         }
 
         [HttpGet]
-        public NexusNodeDataDTO GetNodeData(string accesstoken, string nodeid)
+        public NexusNodeDataDTO GetData(string accesstoken, string nodeid)
         {
             return NodeManager.GetNodeData(accesstoken, nodeid);
         }
 
         [HttpPost]
-        public IActionResult AddNode([FromBody] NexusNodeCreationDTO newNode, string accesstoken, string parentid)
+        public IActionResult Add([FromBody] NexusNodeCreationDTO newNode, string accesstoken, string parentid)
         {
             return NodeManager.AddNode(newNode, accesstoken, parentid);
         }
 
         [HttpDelete]
-        public IActionResult DeleteNode(string accesstoken, string nodeid)
+        public IActionResult Delete(string accesstoken, string nodeid)
         {
             return NodeManager.DeleteNode(accesstoken, nodeid);
         }
 
         [HttpPost]
-        public IActionResult EditNode([FromBody] NexusNodeCreationDTO newNode, string accesstoken, string nodeid)
+        public IActionResult Edit([FromBody] NexusNodeCreationDTO newNode, string accesstoken, string nodeid)
         {
             return NodeManager.EditNode(newNode, accesstoken, nodeid);
         }
