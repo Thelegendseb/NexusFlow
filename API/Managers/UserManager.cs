@@ -130,5 +130,33 @@ namespace API.Managers
             return new OkResult();
 
         }
+
+        public static IActionResult DeleteUser(string accesstoken)
+        {
+            // Obtain collections
+
+            var user_collection = MongoSingleton.Database.GetCollection<UserDB>(TablesSingleton.Users);
+
+            var accesstoken_collection = MongoSingleton.Database.GetCollection<AccessTokenDB>(TablesSingleton.AccessTokens);
+
+            var node_collection = MongoSingleton.Database.GetCollection<NexusNodeDB>(TablesSingleton.Nodes);
+
+            AccessTokenDB token = accesstoken_collection.Find(x => x.Id == accesstoken).ToList()[0];
+
+            // Delete all owned nodes
+
+            node_collection.DeleteMany(x => x.OwnerId == token.UserId);
+
+            // Delete user
+
+            user_collection.DeleteOne(x => x.Id == token.UserId);
+
+            // Delete Access Token
+
+            accesstoken_collection.DeleteOne(x => x.Id == accesstoken);
+
+            return new OkResult();
+
+        }
     }
 }
