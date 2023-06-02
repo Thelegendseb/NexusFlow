@@ -1,7 +1,5 @@
 using API.Managers;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using API.Singletons;
 using NexusFlow.src.models.DTO;
 namespace API.Controllers
 {
