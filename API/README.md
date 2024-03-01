@@ -1,3 +1,4 @@
 # Core Endpoints
 
-![image](https://user-images.githubusercontent.com/62959728/219814720-892cc7e1-9324-4878-bc40-4fcf3ca1d9fd.png)
+![image](https://github.com/Thelegendseb/NexusFlow/assets/62959728/f615708e-021d-48a9-ad6a-264616df32ce)
+
