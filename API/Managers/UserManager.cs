@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using API.Singletons;
-using NexusFlow.models.DB;
-using NexusFlow.models.DTO;
+using API.Models.DB;
+using API.Models.DTO;
 using System.Security.Cryptography;
 using BCrypt.Net;
 using MongoDB.Driver;

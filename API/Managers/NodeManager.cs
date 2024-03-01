@@ -1,9 +1,9 @@
 ﻿using API.Singletons;
-using NexusFlow.models.DTO;
-using NexusFlow.models.DB;
+using API.NodeServices;
+using API.Models.DTO;
+using API.Models.DB;
 using MongoDB.Driver;
 using System.Linq.Expressions;
-using NexusFlow.services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Managers
