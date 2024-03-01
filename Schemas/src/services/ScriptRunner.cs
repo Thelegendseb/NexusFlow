@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Scripting;
 
-namespace NexusFlow.src.services
+namespace NexusFlow.services
 {
     public class ScriptRunner
 

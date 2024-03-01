@@ -1,6 +1,6 @@
 using API.Managers;
 using Microsoft.AspNetCore.Mvc;
-using NexusFlow.src.models.DTO;
+using NexusFlow.models.DTO;
 namespace API.Controllers
 {
     [ApiController]
@@ -49,5 +49,6 @@ namespace API.Controllers
         {
             return NodeManager.EditNode(newNode, accesstoken, nodeid);
         }
+
     }
 }   

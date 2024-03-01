@@ -1,15 +1,16 @@
 ﻿using API.Singletons;
-using NexusFlow.src.models.DB;
+using NexusFlow.models.DTO;
+using NexusFlow.models.DB;
 using MongoDB.Driver;
-using NexusFlow.src.models.DTO;
 using System.Linq.Expressions;
-using NexusFlow.src.services;
+using NexusFlow.services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Managers
 {
     public static class NodeManager
     {
+
         public static NexusNodeDTO GetUserRoot(string accesstoken)
         {
             var accesstoken_collection = MongoSingleton.Database.GetCollection<AccessTokenDB>(TablesSingleton.AccessTokens);

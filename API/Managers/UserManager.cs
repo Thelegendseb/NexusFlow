@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using API.Singletons;
-using NexusFlow.src.models.DB;
-using NexusFlow.src.models.DTO;
+using NexusFlow.models.DB;
+using NexusFlow.models.DTO;
 using System.Security.Cryptography;
 using BCrypt.Net;
 using MongoDB.Driver;
@@ -17,7 +17,8 @@ namespace API.Managers
 
             // perform check to see if username already exists in system
 
-            List<UserDB> users = user_collection.Find(x => x.EmailAddress == user.EmailAddress).ToList();
+             List<UserDB> users = user_collection.Find(x => x.EmailAddress == user.EmailAddress).ToList();
+            // List<UserDB> users = new List<UserDB>();
 
             if(users.Count > 0)
             {

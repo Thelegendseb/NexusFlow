@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace NexusFlow.src.models.DB
+namespace NexusFlow.models.DB
 {
     public class NexusNodeDB
     {

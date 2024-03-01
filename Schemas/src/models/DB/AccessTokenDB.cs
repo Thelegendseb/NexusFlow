@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NexusFlow.src.models.DB
+namespace NexusFlow.models.DB
 {
     public class AccessTokenDB
     {

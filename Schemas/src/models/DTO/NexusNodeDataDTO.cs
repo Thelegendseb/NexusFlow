@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NexusFlow.src.models.DTO
+namespace NexusFlow.models.DTO
 {
     public class NexusNodeDataDTO
     {
