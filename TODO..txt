@@ -1,0 +1,1 @@
+ADmin commands - delete all entries, clear tables etc.

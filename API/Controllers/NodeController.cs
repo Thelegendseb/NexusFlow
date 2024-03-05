@@ -4,7 +4,7 @@ using API.Models.DTO;
 
 namespace API.Controllers
 {
-    [ApiController]
+    [ApiController] 
     [Route("API/Nodes/[action]")]
     public class NodeController : ControllerBase
     {
