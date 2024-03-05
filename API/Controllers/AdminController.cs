@@ -22,4 +22,6 @@ namespace API.Controllers
                 return AdminManager.ClearAll();
             }
         }
+
+    }
 }
